@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import static com.epam.auto.utils.Utils.clickUnclickable;
 import static com.epam.auto.utils.Utils.selectOptionWithWait;
@@ -116,7 +116,7 @@ public class HardcoreTest extends SecondDriverTest {
 
     clickUnclickable(driver, sendMailBtnLocator);
 
-    Thread.sleep(3000);
+    Thread.sleep(1000);
 
     secondDriver.findElement(checkEmail).click();
 

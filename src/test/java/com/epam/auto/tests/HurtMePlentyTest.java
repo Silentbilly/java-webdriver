@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import static com.epam.auto.utils.Utils.clickUnclickable;
 import static com.epam.auto.utils.Utils.selectOptionWithWait;
