@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import static com.epam.auto.utils.Utils.clickUnclickable;
 import static com.epam.auto.utils.Utils.selectOptionWithWait;
@@ -31,16 +31,27 @@ import org.testng.annotations.Test;
  * Datacenter location: Frankfurt (europe-west3)
  * Commited usage: 1 Year
  7. Нажать Add to Estimate
- 8. Проверить соответствие данных следующих полей: VM Class, Instance type, Region, local SSD, commitment term
- 9. Проверить что сумма аренды в месяц совпадает с суммой получаемой при ручном прохождении теста.
- *
- * @author Alexander Kononov
+ 8. Выбрать пункт EMAIL ESTIMATE
+ 9. В новой вкладке открыть https://yopmail.com/ или аналогичный сервис для генерации временных email'ов
+ 10. Скопировать почтовый адрес сгенерированный в yopmail.com
+ 11. Вернуться в калькулятор, в поле Email ввести адрес из предыдущего пункта
+ 12. Нажать SEND EMAIL
+ 13. Дождаться письма с рассчетом стоимости и проверить что Total Estimated Monthly Cost в письме совпадает с тем, что отображается в калькуляторе
  */
 
-public class HurtMePlentyTest extends BaseTest {
+public class HardcoreTest extends SecondDriverTest {
 
-  @Test(description = "Проверка результатов Hurt Me Plenty")
-  public void checkResults() {
+  private final By emailEstimateBtnLocator = By.xpath("//button[@aria-label='Email Estimate']");
+  private final By newEmailBtnLocator = By.xpath("//div[2]/button[1]");
+  private final By copyToClipboardBtnLocator = By.id("cprnd");
+  private final By emailFieldLocator = By.xpath("//input[@ng-model='emailQuote.user.email']");
+  private final By sendMailBtnLocator = By.xpath("//button[@aria-label='Send Email']");
+  private final By checkEmail = By.xpath("//button[@onclick='egengo();']");
+  private final By totalCosts = By.xpath("//h2/b");
+  private final By emailTotalCosts = By.xpath("//tr[2]/td/table/tbody/tr[3]/td[2]/h3");
+
+  @Test(description = "Проверка результатов Hardcore")
+  public void checkResults() throws InterruptedException {
 
     final String searchText = "Google Cloud Platform Pricing Calculator";
 
@@ -71,7 +82,7 @@ public class HurtMePlentyTest extends BaseTest {
     numberOfInstances.sendKeys("4");
 
     WebElement operatingSystemSoftware = WaitingUtils.waitForElementLocatedBy(driver, operatingSystemSoftwareLocator);
-    // //label[@for='select_1972']/parent::md-input-container
+
     operatingSystemSoftware.click();
     WebElement operatingSystemSoftwareOption = WaitingUtils
         .waitForElementLocatedBy(driver, operatingSystemSoftwareOptionLocator);
@@ -108,34 +119,24 @@ public class HurtMePlentyTest extends BaseTest {
 
     clickUnclickable(driver, addToEstimateBtn2Locator);
 
-    final String actualVmClass = driver.findElement(By.xpath("//md-card-content[2]/descendant::md-list-item[4]/div"))
-        .getText();
-    final String expectedVmClass = "VM class: regular";
-    final String actualInstanceType = driver.findElement(By.xpath(
-        "//md-content[@id='compute']/descendant::div[@class='md-list-item-text ng-binding cpc-cart-multiline flex']"))
-        .getText();
-    final String expectedInstanceType = "Instance type: e2-standard-8\n"
-        + "Committed Use Discount applied";
-    final String actualRegion = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::md-content[2]/md-list/md-list-item[1]/div"))
-        .getText();
-    final String expectedRegion = "Region: Los Angeles";
-    final String actualLocalSsd = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::div[@class='md-list-item-text ng-binding flex']"))
-        .getText();
-    final String expectedLocalSsd = "Local SSD: 24x375 GiB";
-    final String actualCommitmentTerm = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::md-list-item[3]/div"))
-        .getText();
-    final String expectedCommitmentTerm = "Commitment term: 1 Year";
-    final String actualEstimatedCost = driver.findElement(By.xpath("//h2/b")).getText();
-    final String expectedEstimatedCost = "Total Estimated Cost: USD 19,284.66 per 1 month";
+    clickUnclickable(driver, emailEstimateBtnLocator);
 
-    Assert.assertEquals(actualVmClass, expectedVmClass);
-    Assert.assertEquals(actualInstanceType, expectedInstanceType);
-    Assert.assertEquals(actualRegion, expectedRegion);
-    Assert.assertEquals(actualLocalSsd, expectedLocalSsd);
-    Assert.assertEquals(actualCommitmentTerm, expectedCommitmentTerm);
-    Assert.assertEquals(actualEstimatedCost, expectedEstimatedCost);
+    secondDriver.get("https://yopmail.com/ru/email-generator");
+    secondDriver.findElement(newEmailBtnLocator).click();
+    secondDriver.findElement(copyToClipboardBtnLocator).click();
+
+    driver.findElement(emailFieldLocator).sendKeys(Keys.CONTROL, "v");
+
+    clickUnclickable(driver, sendMailBtnLocator);
+
+    Thread.sleep(1000);
+
+    secondDriver.findElement(checkEmail).click();
+
+    secondDriver.switchTo().frame(2);
+    final String actualEmailTotalCosts = secondDriver.findElement(emailTotalCosts).getText();
+    final String actualTotalCosts = driver.findElement(totalCosts).getText().substring(22, 35);
+
+    Assert.assertEquals(actualTotalCosts, actualEmailTotalCosts);
   }
 }
