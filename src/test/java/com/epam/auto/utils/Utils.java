@@ -16,7 +16,6 @@ public class Utils {
   public static void clickUnclickable(WebDriver driver, By by) {
     WebElement element = WaitingUtils.waitForElementLocatedBy(driver, by);
     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-
   }
 
   public static void selectOptionWithWait(WebDriver driver, By by) {
