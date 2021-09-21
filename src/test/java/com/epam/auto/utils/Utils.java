@@ -13,11 +13,6 @@ public class Utils {
     driver.findElement(By.xpath("//button[text()='Create New Paste']")).click();
   }
 
-  public static void clickUnclickable(WebDriver driver, By by) {
-    WebElement element = WaitingUtils.waitForElementLocatedBy(driver, by);
-    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-  }
-
   public static void selectOptionWithWait(WebDriver driver, By by) {
     WaitingUtils.waitForElementVisibility(driver, by);
     WebElement element = WaitingUtils.waitForElementLocatedBy(driver, by);

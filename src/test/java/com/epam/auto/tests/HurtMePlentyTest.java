@@ -1,12 +1,10 @@
 package com.epam.auto.tests;
 
-import static com.epam.auto.utils.Utils.clickUnclickable;
 import static com.epam.auto.utils.Utils.selectOptionWithWait;
 
-import com.epam.auto.utils.WaitingUtils;
+import com.epam.auto.page.GoogleCalculatorPage;
+import com.epam.auto.page.GoogleCloudPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -39,74 +37,56 @@ import org.testng.annotations.Test;
 
 public class HurtMePlentyTest extends BaseTest {
 
+
   @Test(description = "Проверка результатов Hurt Me Plenty")
   public void checkResults() {
-
     final String searchText = "Google Cloud Platform Pricing Calculator";
 
-    driver.get("https://cloud.google.com");
+    GoogleCloudPage googleCloudPage = new GoogleCloudPage(driver);
+    GoogleCalculatorPage googleCalculatorPage = new GoogleCalculatorPage(driver, searchText);
 
-    WebElement searchBar = WaitingUtils.waitForElementLocatedBy(driver, searchBarLocator);
-    searchBar.click();
+    googleCloudPage.openPage();
+    googleCloudPage.searchForText(searchText);
 
-    searchBar.sendKeys(searchText);
+    googleCalculatorPage.clickElement(googleCalculatorPage.pricingCalculator);
 
-    searchBar.sendKeys(Keys.RETURN);
+    googleCalculatorPage.switchFrame();
 
-    WebElement pricingCalculator = WaitingUtils
-        .waitForElementLocatedBy(driver, pricingCalculatorLocator);
-    pricingCalculator.click();
+    googleCalculatorPage.clickElement(googleCalculatorPage.computerEngineBtn);
 
-    WebElement headFrame = WaitingUtils
-        .waitForElementLocatedBy(driver, headFrameLocator);
+    googleCalculatorPage.sendKeys(googleCalculatorPage.numberOfInstances, "4");
 
-    driver.switchTo().frame(headFrame)
-        .switchTo().frame("myFrame");
+    googleCalculatorPage.clickElement(googleCalculatorPage.operatingSystemSoftware);
 
-    WebElement computerEngineBtn = WaitingUtils
-        .waitForElementLocatedBy(driver, computerEngineBtnLocator);
-    computerEngineBtn.click();
+    googleCalculatorPage.clickElement(googleCalculatorPage.operatingSystemSoftwareOption);
 
-    WebElement numberOfInstances = WaitingUtils.waitForElementLocatedBy(driver, numberOfInstancesLocator);
-    numberOfInstances.sendKeys("4");
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.machineClass);
 
-    WebElement operatingSystemSoftware = WaitingUtils.waitForElementLocatedBy(driver, operatingSystemSoftwareLocator);
-    // //label[@for='select_1972']/parent::md-input-container
-    operatingSystemSoftware.click();
-    WebElement operatingSystemSoftwareOption = WaitingUtils
-        .waitForElementLocatedBy(driver, operatingSystemSoftwareOptionLocator);
-    operatingSystemSoftwareOption.click();
+    googleCalculatorPage.clickElement(googleCalculatorPage.machineType);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.machineTypeOption);
 
-    WebElement machineClass = WaitingUtils.waitForElementLocatedBy(driver, machineClassLocator);
-    machineClass.click();
-    clickUnclickable(driver, machineClassOptionLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.committedUsage);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.committedUsageOption);
 
-    WebElement machineType = WaitingUtils.waitForElementLocatedBy(driver, machineTypeLocator);
-    machineType.click();
-    clickUnclickable(driver, machineTypeOptionLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.addToEstimateBtn);
 
-    clickUnclickable(driver, committedUsageLocator);
-    clickUnclickable(driver, committedUsageOptionLocator);
+    googleCalculatorPage.sendKeys(googleCalculatorPage.numberOfNodes, "4");
 
-    clickUnclickable(driver, addToEstimateBtnLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.addGpusCheckBox);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.numberOfGpus);
+    googleCalculatorPage.selectGpuWithWait();
 
-    WebElement numberOfNodes = WaitingUtils.waitForElementLocatedBy(driver, numberOfNodesLocator);
-    numberOfNodes.sendKeys("4");
-
-    clickUnclickable(driver, addGpusCheckBoxLocator);
-    clickUnclickable(driver, numberOfGpusLocator);
-    selectOptionWithWait(driver, numberOfGpusOptionLocator);
-    clickUnclickable(driver, gpuTypeLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.gpuType);
     selectOptionWithWait(driver, gpuTypeOptionLocator);
 
-    clickUnclickable(driver, localSsdLocator);
-    clickUnclickable(driver, localSsdOptionLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.localSsd);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.localSsdOption);
 
-    clickUnclickable(driver, datacenterLocationLocator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.datacenterLocation);
 
-    selectOptionWithWait(driver, datacenterLocationOptionLocator);
+    googleCalculatorPage.selectDatacenterLocationWithWait();
 
-    clickUnclickable(driver, addToEstimateBtn2Locator);
+    googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.addToEstimateBtn2);
 
     final String actualVmClass = driver.findElement(By.xpath("//md-card-content[2]/descendant::md-list-item[4]/div"))
         .getText();
@@ -129,7 +109,7 @@ public class HurtMePlentyTest extends BaseTest {
         .getText();
     final String expectedCommitmentTerm = "Commitment term: 1 Year";
     final String actualEstimatedCost = driver.findElement(By.xpath("//h2/b")).getText();
-    final String expectedEstimatedCost = "Total Estimated Cost: USD 19,284.66 per 1 month";
+    final String expectedEstimatedCost = "Total Estimated Cost: USD 19,270.27 per 1 month";
 
     Assert.assertEquals(actualVmClass, expectedVmClass);
     Assert.assertEquals(actualInstanceType, expectedInstanceType);
