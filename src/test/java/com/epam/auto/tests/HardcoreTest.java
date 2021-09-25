@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import static com.epam.auto.utils.Utils.clickUnclickable;
 import static com.epam.auto.utils.Utils.selectOptionWithWait;
@@ -111,15 +111,16 @@ public class HardcoreTest extends SecondDriverTest {
     secondDriver.get("https://yopmail.com/ru/email-generator");
     secondDriver.findElement(newEmailBtnLocator).click();
     secondDriver.findElement(copyToClipboardBtnLocator).click();
+    Thread.sleep(3000);
 
     driver.findElement(emailFieldLocator).sendKeys(Keys.CONTROL, "v");
+    Thread.sleep(3000);
 
     clickUnclickable(driver, sendMailBtnLocator);
 
     Thread.sleep(3000);
 
     secondDriver.findElement(checkEmail).click();
-
     secondDriver.switchTo().frame(2);
     final String actualEmailTotalCosts = secondDriver.findElement(emailTotalCosts).getText();
     final String actualTotalCosts = driver.findElement(totalCosts).getText().substring(22, 35);

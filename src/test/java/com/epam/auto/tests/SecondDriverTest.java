@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

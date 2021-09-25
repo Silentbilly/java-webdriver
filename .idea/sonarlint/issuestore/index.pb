@@ -15,3 +15,7 @@ j
 :src/test/java/com/epam/auto/utils/tests/BringItOnTest.java,8\d\8d7420812c2bcadb5f9c02af0d1b62db2f8cf4a8
 m
 =src/test/java/com/epam/auto/utils/tests/HurtMePlentyTest.java,1\6\1686b3809be5128400ccfc723d2051d553ea14f9
+m
+=src/test/java/com/epam/auto/utils/tests/SecondDriverTest.java,f\8\f80fe5f8f0f642cda1926a84aef465ffca6adb52
+i
+9src/test/java/com/epam/auto/utils/tests/HardcoreTest.java,0\f\0fc4281fdd00d05329867bcda0b8d947106c4ed7

@@ -1,4 +1,4 @@
-package com.epam.auto.utils.tests;
+package com.epam.auto.tests;
 
 import com.epam.auto.utils.CustomConditions;
 import com.epam.auto.utils.Utils;
