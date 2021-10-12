@@ -37,7 +37,6 @@ import org.testng.annotations.Test;
 
 public class HurtMePlentyTest extends BaseTest {
 
-
   @Test(description = "Проверка результатов Hurt Me Plenty")
   public void checkResults() {
     final String searchText = "Google Cloud Platform Pricing Calculator";
