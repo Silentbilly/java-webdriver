@@ -55,7 +55,6 @@ public class GoogleCalculatorPage extends BasePage {
   private final By numberOfGpusOptionLocator = By
       .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
   private final By datacenterLocationOptionLocator = By.xpath("//*[@id=\"select_option_284\"]");
-  private final By gpuTypeOptionLocator = By.xpath("//md-select[@placeholder='Local SSD']");
 
   public GoogleCalculatorPage(WebDriver driver, String searchText) {
     super(driver);
@@ -64,14 +63,17 @@ public class GoogleCalculatorPage extends BasePage {
 
   public void clickElement(WebElement element) {
     new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
+    Utils.highlightElement(driver, element);
     element.click();
   }
 
   public void clickUnclickableElement(WebElement element) {
+    Utils.highlightElement(driver, element);
     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
   }
 
   public void sendKeys(WebElement element, String keys) {
+    Utils.highlightElement(driver, element);
     new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
     element.sendKeys(keys);
   }
@@ -82,10 +84,6 @@ public class GoogleCalculatorPage extends BasePage {
 
   public void selectDatacenterLocationWithWait() {
     Utils.selectOptionWithWait(driver, datacenterLocationOptionLocator);
-  }
-
-  public void selectGpuTypeWithWait() {
-    Utils.selectOptionWithWait(driver, gpuTypeOptionLocator);
   }
 
   public void switchFrame() {

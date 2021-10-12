@@ -4,6 +4,7 @@ import static com.epam.auto.utils.Utils.selectOptionWithWait;
 
 import com.epam.auto.page.GoogleCalculatorPage;
 import com.epam.auto.page.GoogleCloudPage;
+import com.epam.auto.utils.Utils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;

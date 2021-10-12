@@ -1,8 +1,10 @@
 package com.epam.auto.page;
 
+import com.epam.auto.utils.Utils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class GoogleCloudPage extends BasePage {
@@ -22,9 +24,11 @@ public class GoogleCloudPage extends BasePage {
   }
 
   public GoogleCalculatorPage searchForText(String searchText) {
-    searchBar.click();
-    searchBar.sendKeys(searchText);
-    searchBar.sendKeys(Keys.RETURN);
+    Actions action = new Actions(driver);
+    Utils.highlightElement(driver, searchBar);
+    action.click(searchBar).build().perform();
+    action.sendKeys(searchBar, searchText).build().perform();
+    action.sendKeys(searchBar, Keys.RETURN).build().perform();
     return new GoogleCalculatorPage(driver, searchText);
   }
 }
