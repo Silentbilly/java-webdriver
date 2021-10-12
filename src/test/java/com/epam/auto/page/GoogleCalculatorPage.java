@@ -30,11 +30,11 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement machineType;
   @FindBy(xpath = "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-E2-STANDARD-8']")
   public WebElement machineTypeOption;
-  @FindBy(xpath = "//md-select[@placeholder='Committed usage']")
+  @FindBy(xpath = "//*[@id=\"select_112\"]")
   public WebElement committedUsage;
-  @FindBy(xpath = "//md-option[@ng-value='1']")
+  @FindBy(xpath = "//md-option[@id='select_option_110']/div[contains(text(), '1 Year')]")
   public WebElement committedUsageOption;
-  @FindBy(xpath = "//div[1]/form/div[13]/button[@aria-label='Add to Estimate']")
+  @FindBy(xpath = "//div[1]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn;
   @FindBy(xpath = "//md-input-container/child::input[@ng-model='listingCtrl.soleTenant.nodesCount']")
   public WebElement numberOfNodes;
@@ -48,13 +48,13 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement localSsd;
   @FindBy(xpath = "//md-option[@ng-value='24']")
   public WebElement localSsdOption;
-  @FindBy(xpath = "//md-select[@placeholder='Datacenter location']")
+  @FindBy(xpath = "//*[@id=\"select_134\"]")
   public WebElement datacenterLocation;
-  @FindBy(xpath = "//div[2]/form/div[13]/button[@aria-label='Add to Estimate']")
+  @FindBy(xpath = "//div[2]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn2;
   private final By numberOfGpusOptionLocator = By
       .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
-  private final By datacenterLocationOptionLocator = By.xpath("//md-option[@value='us-west2']");
+  private final By datacenterLocationOptionLocator = By.xpath("//*[@id=\"select_option_284\"]");
   private final By gpuTypeOptionLocator = By.xpath("//md-select[@placeholder='Local SSD']");
 
   public GoogleCalculatorPage(WebDriver driver, String searchText) {

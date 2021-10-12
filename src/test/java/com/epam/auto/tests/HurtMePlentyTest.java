@@ -83,13 +83,11 @@ public class HurtMePlentyTest extends BaseTest {
     googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.localSsdOption);
 
     googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.datacenterLocation);
-
     googleCalculatorPage.selectDatacenterLocationWithWait();
 
     googleCalculatorPage.clickUnclickableElement(googleCalculatorPage.addToEstimateBtn2);
 
-    final String actualVmClass = driver.findElement(By.xpath("//md-card-content[2]/descendant::md-list-item[4]/div"))
-        .getText();
+    final String actualVmClass = driver.findElement(By.xpath("//div[contains(text(), 'VM class')]")).getText();
     final String expectedVmClass = "VM class: regular";
     final String actualInstanceType = driver.findElement(By.xpath(
         "//md-content[@id='compute']/descendant::div[@class='md-list-item-text ng-binding cpc-cart-multiline flex']"))
@@ -100,16 +98,13 @@ public class HurtMePlentyTest extends BaseTest {
         .findElement(By.xpath("//md-card-content[2]/descendant::md-content[2]/md-list/md-list-item[1]/div"))
         .getText();
     final String expectedRegion = "Region: Los Angeles";
-    final String actualLocalSsd = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::div[@class='md-list-item-text ng-binding flex']"))
-        .getText();
+    final String actualLocalSsd = driver.findElement(By.xpath("//div[contains(text(), 'Local SSD')]")).getText();
     final String expectedLocalSsd = "Local SSD: 24x375 GiB";
-    final String actualCommitmentTerm = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::md-list-item[3]/div"))
+    final String actualCommitmentTerm = driver.findElement(By.xpath("//div[contains(text(), 'Commitment term')]"))
         .getText();
     final String expectedCommitmentTerm = "Commitment term: 1 Year";
     final String actualEstimatedCost = driver.findElement(By.xpath("//h2/b")).getText();
-    final String expectedEstimatedCost = "Total Estimated Cost: USD 19,270.27 per 1 month";
+    final String expectedEstimatedCost = "Total Estimated Cost: USD 19,271.87 per 1 month";
 
     Assert.assertEquals(actualVmClass, expectedVmClass);
     Assert.assertEquals(actualInstanceType, expectedInstanceType);
