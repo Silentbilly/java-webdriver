@@ -84,10 +84,6 @@ public class GoogleCalculatorPage extends BasePage {
     Utils.selectOptionWithWait(driver, datacenterLocationOptionLocator);
   }
 
-  public void selectGpuTypeWithWait() {
-    Utils.selectOptionWithWait(driver, gpuTypeOptionLocator);
-  }
-
   public void switchFrame() {
     WebElement headFrame = WaitingUtils
         .waitForElementLocatedBy(driver, headFrameLocator);

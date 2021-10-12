@@ -16,11 +16,6 @@ public class WaitingUtils {
         .until(ExpectedConditions.presenceOfElementLocated(by));
   }
 
-  public static List<WebElement> waitForAllElementsLocatedBy(WebDriver driver, By by) {
-    return new WebDriverWait(driver, 10)
-        .until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
-  }
-
   public static WebElement waitForElementVisibility(WebDriver driver, By by) {
     return new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(driver.findElement(by)));
   }

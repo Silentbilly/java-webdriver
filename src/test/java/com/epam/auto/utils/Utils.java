@@ -9,10 +9,6 @@ import org.openqa.selenium.WebElement;
 @UtilityClass
 public class Utils {
 
-  public static void createNewPasteBin(WebDriver driver) {
-    driver.findElement(By.xpath("//button[text()='Create New Paste']")).click();
-  }
-
   public static void selectOptionWithWait(WebDriver driver, By by) {
     WaitingUtils.waitForElementVisibility(driver, by);
     WebElement element = WaitingUtils.waitForElementLocatedBy(driver, by);
