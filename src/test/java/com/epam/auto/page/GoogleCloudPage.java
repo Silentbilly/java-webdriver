@@ -26,7 +26,7 @@ public class GoogleCloudPage extends BasePage {
   public GoogleCalculatorPage searchForText(String searchText) {
     Actions action = new Actions(driver);
     Utils.highlightElement(driver, searchBar);
-    action.click(searchBar).build().perform();
+    searchBar.click();
     action.sendKeys(searchBar, searchText).build().perform();
     action.sendKeys(searchBar, Keys.RETURN).build().perform();
     return new GoogleCalculatorPage(driver, searchText);
