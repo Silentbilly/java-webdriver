@@ -6,7 +6,6 @@
     <parameter name="Port" value="5557"/>
     <classes>
       <class name="com.epam.auto.tests.HurtMePlentyTest"/>
-
     </classes>
   </test>
 
@@ -14,7 +13,6 @@
     <parameter name="Port" value="5558"/>
     <classes>
       <class name="com.epam.auto.tests.HurtMePlentyTest"/>
-
     </classes>
   </test>
 
