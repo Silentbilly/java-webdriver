@@ -1,6 +1,5 @@
 package com.epam.auto.utils;
 
-import java.util.List;
 import lombok.experimental.UtilityClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +16,6 @@ public class WaitingUtils {
   }
 
   public static WebElement waitForElementVisibility(WebDriver driver, By by) {
-    return new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(driver.findElement(by)));
+    return new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(driver.findElement(by)));
   }
 }
