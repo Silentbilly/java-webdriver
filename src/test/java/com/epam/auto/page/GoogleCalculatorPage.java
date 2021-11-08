@@ -30,9 +30,9 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement machineType;
   @FindBy(xpath = "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-E2-STANDARD-8']")
   public WebElement machineTypeOption;
-  @FindBy(xpath = "//*[@id=\"select_112\"]")
+  @FindBy(xpath = "/html/body/md-content/md-card/div/md-card-content[1]/div[2]/div/md-card/md-card-content/div/div[2]/form/div[10]/div[1]/md-input-container/md-select/md-select-value/span[1]")
   public WebElement committedUsage;
-  @FindBy(xpath = "//md-option[@id='select_option_110']/div[contains(text(), '1 Year')]")
+  @FindBy(xpath = "//md-option[@id='select_option_139']/div[contains(text(), '1 Year')]")
   public WebElement committedUsageOption;
   @FindBy(xpath = "//div[1]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn;
@@ -42,56 +42,67 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement addGpusCheckBox;
   @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
   public WebElement numberOfGpus;
-  @FindBy(xpath = "//md-select[@placeholder='GPU type']")
-  public WebElement gpuType;
+  private final By gpuType = By.xpath("//md-select[@placeholder='Local SSD']");
   @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
   public WebElement localSsd;
   @FindBy(xpath = "//md-option[@ng-value='24']")
   public WebElement localSsdOption;
-  @FindBy(xpath = "//*[@id=\"select_134\"]")
+  @FindBy(xpath = "//div[2]/form/div[10]/div[1]/md-input-container/md-select/md-select-value/span[2]")
   public WebElement datacenterLocation;
   @FindBy(xpath = "//div[2]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn2;
   private final By numberOfGpusOptionLocator = By
       .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
-  private final By datacenterLocationOptionLocator = By.xpath("//*[@id=\"select_option_284\"]");
+  private final By datacenterLocationOptionLocator = By
+      .xpath("//md-select-menu[@class='md-overflow']/md-content/md-optgroup/md-option/div[contains(text(), 'Los Angeles (us-west2)')]");
 
   public GoogleCalculatorPage(WebDriver driver, String searchText) {
     super(driver);
     this.searchText = searchText;
   }
 
-  public void clickElement(WebElement element) {
+  public GoogleCalculatorPage clickElement(WebElement element) {
     new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
     Utils.highlightElement(driver, element);
     element.click();
+    return this;
   }
 
-  public void clickUnclickableElement(WebElement element) {
+  public GoogleCalculatorPage clickJsElement(WebElement element) {
     Utils.highlightElement(driver, element);
     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    return this;
   }
 
-  public void sendKeys(WebElement element, String keys) {
+  public GoogleCalculatorPage sendKeys(WebElement element, String keys) {
     Utils.highlightElement(driver, element);
     new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
     element.sendKeys(keys);
+    return this;
   }
 
-  public void selectGpuWithWait() {
+  public GoogleCalculatorPage selectGpuWithWait() {
     Utils.selectOptionWithWait(driver, numberOfGpusOptionLocator);
+    return this;
   }
 
-  public void selectDatacenterLocationWithWait() {
+  public GoogleCalculatorPage selectGpuTypeWithWait() {
+    Utils.selectOptionWithWait(driver, gpuType);
+    return this;
+  }
+
+  public GoogleCalculatorPage selectDatacenterLocationOptionWithWait() {
     Utils.selectOptionWithWait(driver, datacenterLocationOptionLocator);
+    return this;
   }
 
-  public void switchFrame() {
+  public GoogleCalculatorPage switchFrame() {
     WebElement headFrame = WaitingUtils
         .waitForElementLocatedBy(driver, headFrameLocator);
 
     driver.switchTo().frame(headFrame)
         .switchTo().frame("myFrame");
+    return this;
   }
 
   protected BasePage openPage() {

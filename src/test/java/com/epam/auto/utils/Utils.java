@@ -1,5 +1,6 @@
 package com.epam.auto.utils;
 
+import com.epam.auto.driver.CustomDriverDecorator;
 import lombok.experimental.UtilityClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,7 +18,7 @@ public class Utils {
     }
 
     public static void highlightElement(WebDriver driver, WebElement element) {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        JavascriptExecutor jsExecutor = (CustomDriverDecorator) driver;
         jsExecutor.executeScript("arguments[0].setAttribute('style', 'border:2px solid red; background:yellow');",
                 element);
     }

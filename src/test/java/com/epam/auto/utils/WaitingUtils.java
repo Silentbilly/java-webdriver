@@ -1,6 +1,5 @@
 package com.epam.auto.utils;
 
-import java.util.List;
 import lombok.experimental.UtilityClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
