@@ -2,14 +2,12 @@ package com.epam.auto.page;
 
 import com.epam.auto.object.CalculatorData;
 import com.epam.auto.object.CalculatorDataFactory;
-import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.DataProvider;
 
 public abstract class BasePage {
 
-  @SneakyThrows
   @DataProvider
   public static Object[][] pageDataMethod() {
     CalculatorData defaultCalculatorData = CalculatorDataFactory.createDefaultCalculatorData();
