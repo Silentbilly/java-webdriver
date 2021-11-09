@@ -13,7 +13,6 @@ public class BaseTest {
 
   protected WebDriver driver;
 
-  @SneakyThrows
   @DataProvider
   public static Object[][] dataMethod() {
     CalculatorData defaultCalculatorData = CalculatorDataFactory.createDefaultCalculatorData();
