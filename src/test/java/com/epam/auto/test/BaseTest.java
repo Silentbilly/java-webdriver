@@ -3,7 +3,6 @@ package com.epam.auto.test;
 import com.epam.auto.driver.DriverSingleton;
 import com.epam.auto.object.CalculatorData;
 import com.epam.auto.object.CalculatorDataFactory;
-import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
