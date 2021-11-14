@@ -1,6 +1,5 @@
 package com.epam.auto.test;
 
-import com.epam.auto.page.GoogleCalculatorPage;
 import com.epam.auto.page.GoogleCloudPage;
 import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.By;
@@ -9,34 +8,24 @@ import org.testng.annotations.Factory;
 import org.testng.annotations.Test;
 
 /**
- Автоматизировать следующий сценарий:
-
- 1. Открыть https://cloud.google.com/
- 2. Нажав кнопку поиска по порталу вверху страницы, ввести в поле поиска"Google Cloud Platform Pricing Calculator"
- 3. Запустить поиск, нажав кнопку поиска.
- 4. В результатах поиска кликнуть "Google Cloud Platform Pricing Calculator" и перейти на страницу калькулятора.
- 5. Активировать раздел COMPUTE ENGINE вверху страницы
- 6. Заполнить форму следующими данными:
- * Number of instances: 4
- * What are these instances for?: оставить пустым
- * Operating System / Software: Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS
- * VM Class: Regular
- * Instance type: n1-standard-8    (vCPUs: 8, RAM: 30 GB)
- * Выбрать Add GPUs
- * Number of GPUs: 1
- * GPU type: NVIDIA Tesla V100
- * Local SSD: 2x375 Gb
- * Datacenter location: Frankfurt (europe-west3)
- * Commited usage: 1 Year
- 7. Нажать Add to Estimate
- 8. Проверить соответствие данных следующих полей: VM Class, Instance type, Region, local SSD, commitment term
- 9. Проверить что сумма аренды в месяц совпадает с суммой получаемой при ручном прохождении теста.
+ * Автоматизировать следующий сценарий:
+ * <p>
+ * 1. Открыть https://cloud.google.com/ 2. Нажав кнопку поиска по порталу вверху страницы, ввести в поле поиска"Google
+ * Cloud Platform Pricing Calculator" 3. Запустить поиск, нажав кнопку поиска. 4. В результатах поиска кликнуть "Google
+ * Cloud Platform Pricing Calculator" и перейти на страницу калькулятора. 5. Активировать раздел COMPUTE ENGINE вверху
+ * страницы 6. Заполнить форму следующими данными: Number of instances: 4 What are these instances for?: оставить пустым
+ * Operating System / Software: Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS VM Class: Regular
+ * Instance type: n1-standard-8    (vCPUs: 8, RAM: 30 GB) Выбрать Add GPUs Number of GPUs: 1 GPU type: NVIDIA Tesla V100
+ * Local SSD: 2x375 Gb Datacenter location: Frankfurt (europe-west3) Commited usage: 1 Year 7. Нажать Add to Estimate 8.
+ * Проверить соответствие данных следующих полей: VM Class, Instance type, Region, local SSD, commitment term 9.
+ * Проверить что сумма аренды в месяц совпадает с суммой получаемой при ручном прохождении теста.
  *
  * @author Alexander Kononov
  */
 
 @Log4j
 public class HurtMePlentyTest extends BaseTest {
+
   private final String numberOfInstances;
   private final String numberOfNodes;
   private final String expectedVmClass;
@@ -64,50 +53,38 @@ public class HurtMePlentyTest extends BaseTest {
   public void checkResults() {
     final String searchText = "Google Cloud Platform Pricing Calculator";
 
+    log.info("Opening main page and searching for text. Making calculations on calculator");
     GoogleCloudPage googleCloudPage = new GoogleCloudPage(driver);
-    GoogleCalculatorPage googleCalculatorPage = new GoogleCalculatorPage(driver, searchText);
-
-    log.info("Opening main page and searching for text");
     googleCloudPage
         .openPage()
-        .searchForText(searchText);
-
-    log.info("Making calculations on calculator");
-    googleCalculatorPage
-        .clickElement(googleCalculatorPage.pricingCalculator)
+        .searchForText(searchText)
+        .goToPricingCalculatorPage()
         .switchFrame()
-        .clickElement(googleCalculatorPage.computerEngineBtn)
-        .sendKeys(googleCalculatorPage.numberOfInstances, numberOfInstances)
-        .clickElement(googleCalculatorPage.operatingSystemSoftware)
-        .clickElement(googleCalculatorPage.operatingSystemSoftwareOption)
-        .clickJsElement(googleCalculatorPage.machineClass)
-        .clickElement(googleCalculatorPage.machineType)
-        .clickJsElement(googleCalculatorPage.machineTypeOption)
-        .clickJsElement(googleCalculatorPage.addToEstimateBtn)
-        .sendKeys(googleCalculatorPage.numberOfNodes, numberOfNodes)
-        .clickJsElement(googleCalculatorPage.addGpusCheckBox)
-        .clickJsElement(googleCalculatorPage.numberOfGpus)
-        .selectGpuWithWait()
-        .selectGpuTypeWithWait()
-        .clickJsElement(googleCalculatorPage.localSsd)
-        .clickJsElement(googleCalculatorPage.localSsdOption)
-        .clickJsElement(googleCalculatorPage.datacenterLocation)
-        .selectDatacenterLocationOptionWithWait()
-        .clickJsElement(googleCalculatorPage.committedUsage)
-        .clickJsElement(googleCalculatorPage.committedUsageOption)
-        .clickJsElement(googleCalculatorPage.addToEstimateBtn2);
+        .clickComputeEngineBtn()
+        .enterNumberOfInstances(numberOfInstances)
+        .selectOperatingSystemSoftware()
+        .selectMachineClass()
+        .selectMachineType()
+        .addToEstimate()
+        .enterNumberOfNodes(numberOfNodes)
+        .addNumberOfGpus()
+        .selectGpu()
+        .selectLocalSsd()
+        .selectDatacenterLocation()
+        .selectCommitUsage()
+        .addToEstimateSecond();
 
-    final String actualVmClass = driver.findElement(By.xpath("//div[contains(text(), 'VM class')]")).getText();
-    final String actualInstanceType = driver.findElement(By.xpath(
+    final String actualVmClass = findElement(By.xpath("//div[contains(text(), 'VM class')]")).getText();
+    final String actualInstanceType = findElement(By.xpath(
         "//md-content[@id='compute']/descendant::div[contains(text(), 'Instance type')]"))
         .getText();
-    final String actualRegion = driver
-        .findElement(By.xpath("//md-card-content[2]/descendant::md-content[2]/md-list/md-list-item[1]/div"))
+    final String actualRegion = findElement(
+        By.xpath("//md-card-content[2]/descendant::md-content[2]/md-list/md-list-item[1]/div"))
         .getText();
-    final String actualLocalSsd = driver.findElement(By.xpath("//div[contains(text(), 'Local SSD')]")).getText();
-    final String actualCommitmentTerm = driver.findElement(By.xpath("//div[contains(text(), 'Commitment term')]"))
+    final String actualLocalSsd = findElement(By.xpath("//div[contains(text(), 'Local SSD')]")).getText();
+    final String actualCommitmentTerm = findElement(By.xpath("//div[contains(text(), 'Commitment term')]"))
         .getText();
-    final String actualEstimatedCost = driver.findElement(By.xpath("//h2/b")).getText();
+    final String actualEstimatedCost = findElement(By.xpath("//h2/b")).getText();
 
     log.info("Checking final calculations");
     Assert.assertEquals(actualVmClass, expectedVmClass);

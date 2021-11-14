@@ -1,6 +1,6 @@
 package com.epam.auto.page;
 
-import com.epam.auto.utils.Utils;
+import com.epam.auto.utils.ElementActions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,13 +19,13 @@ public class GoogleCloudPage extends BasePage {
   }
 
   public GoogleCloudPage openPage() {
-    driver.get(HOMEPAGE_URL);
+    get(HOMEPAGE_URL);
     return this;
   }
 
   public GoogleCalculatorPage searchForText(String searchText) {
     Actions action = new Actions(driver);
-    Utils.highlightElement(driver, searchBar);
+    ElementActions.highlightElement(searchBar);
     searchBar.click();
     searchBar.sendKeys(searchText);
     action.sendKeys(searchBar, Keys.RETURN).build().perform();

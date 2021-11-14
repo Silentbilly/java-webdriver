@@ -1,23 +1,26 @@
 package com.epam.auto.page;
 
-import com.epam.auto.utils.Utils;
-import com.epam.auto.utils.WaitingUtils;
+import com.epam.auto.utils.ElementActions;
+import com.epam.auto.utils.Waiting;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GoogleCalculatorPage extends BasePage {
 
   private final String searchText;
   private final By headFrameLocator = By.xpath("//iframe[contains(@name,'goog_')]");
+  private final By gpuType = By.xpath("//md-select[@placeholder='Local SSD']");
+  private final By numberOfGpusOptionLocator = By
+      .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
+  private final By datacenterLocationOptionLocator = By
+      .xpath(
+          "//md-select-menu[@class='md-overflow']/md-content/md-optgroup/md-option/div[contains(text(), 'Los Angeles (us-west2)')]");
   @FindBy(xpath = "//b[text()='Google Cloud Platform Pricing Calculator']")
   public WebElement pricingCalculator;
   @FindBy(xpath = "//div[@class='hexagon-in2' and ancestor::div[@title='Compute Engine'] and ancestor::md-tab-item]")
-  public WebElement computerEngineBtn;
+  public WebElement computeEngineBtn;
   @FindBy(xpath = "//md-input-container/child::input[@ng-model='listingCtrl.computeServer.quantity']")
   public WebElement numberOfInstances;
   @FindBy(xpath = "//md-card-content/div/div[1]/form/div[3]/div[1]/md-input-container")
@@ -42,7 +45,6 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement addGpusCheckBox;
   @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
   public WebElement numberOfGpus;
-  private final By gpuType = By.xpath("//md-select[@placeholder='Local SSD']");
   @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
   public WebElement localSsd;
   @FindBy(xpath = "//md-option[@ng-value='24']")
@@ -51,56 +53,106 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement datacenterLocation;
   @FindBy(xpath = "//div[2]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn2;
-  private final By numberOfGpusOptionLocator = By
-      .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
-  private final By datacenterLocationOptionLocator = By
-      .xpath("//md-select-menu[@class='md-overflow']/md-content/md-optgroup/md-option/div[contains(text(), 'Los Angeles (us-west2)')]");
 
   public GoogleCalculatorPage(WebDriver driver, String searchText) {
     super(driver);
     this.searchText = searchText;
   }
 
-  public GoogleCalculatorPage clickElement(WebElement element) {
-    new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
-    Utils.highlightElement(driver, element);
-    element.click();
+  public GoogleCalculatorPage goToPricingCalculatorPage() {
+    clickElement(pricingCalculator);
     return this;
   }
 
-  public GoogleCalculatorPage clickJsElement(WebElement element) {
-    Utils.highlightElement(driver, element);
-    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+  public GoogleCalculatorPage clickComputeEngineBtn() {
+    clickElement(computeEngineBtn);
     return this;
   }
 
-  public GoogleCalculatorPage sendKeys(WebElement element, String keys) {
-    Utils.highlightElement(driver, element);
-    new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
-    element.sendKeys(keys);
+  public GoogleCalculatorPage enterNumberOfInstances(String numOfInst) {
+    sendKeys(numberOfInstances, numOfInst);
     return this;
   }
 
-  public GoogleCalculatorPage selectGpuWithWait() {
-    Utils.selectOptionWithWait(driver, numberOfGpusOptionLocator);
+  public GoogleCalculatorPage enterNumberOfNodes(String numOfNodes) {
+    sendKeys(numberOfNodes, numOfNodes);
     return this;
   }
 
-  public GoogleCalculatorPage selectGpuTypeWithWait() {
-    Utils.selectOptionWithWait(driver, gpuType);
+  public GoogleCalculatorPage selectOperatingSystemSoftware() {
+    clickElement(operatingSystemSoftware);
+    clickJsElement(operatingSystemSoftwareOption);
     return this;
   }
 
-  public GoogleCalculatorPage selectDatacenterLocationOptionWithWait() {
-    Utils.selectOptionWithWait(driver, datacenterLocationOptionLocator);
+  public GoogleCalculatorPage selectMachineClass() {
+    clickJsElement(machineClass);
     return this;
+  }
+
+  public GoogleCalculatorPage selectMachineType() {
+    clickElement(machineType);
+    clickJsElement(machineTypeOption);
+    return this;
+  }
+
+  public GoogleCalculatorPage addNumberOfGpus() {
+    clickJsElement(addGpusCheckBox);
+    clickJsElement(numberOfGpus);
+    return this;
+  }
+
+  public GoogleCalculatorPage selectLocalSsd() {
+    clickJsElement(localSsd);
+    clickJsElement(localSsdOption);
+    return this;
+  }
+
+  public GoogleCalculatorPage selectDatacenterLocation() {
+    clickJsElement(datacenterLocation);
+    selectDatacenterLocationOptionWithWait();
+    return this;
+  }
+
+  public GoogleCalculatorPage selectCommitUsage() {
+    clickJsElement(committedUsage);
+    clickJsElement(committedUsageOption);
+    return this;
+  }
+
+  public GoogleCalculatorPage selectGpu() {
+    selectGpuWithWait();
+    selectGpuTypeWithWait();
+    return this;
+  }
+
+  public GoogleCalculatorPage addToEstimate() {
+    clickJsElement(addToEstimateBtn);
+    return this;
+  }
+
+  public void addToEstimateSecond() {
+    clickJsElement(addToEstimateBtn2);
+  }
+
+
+  public void selectGpuWithWait() {
+    ElementActions.selectOptionWithWait(numberOfGpusOptionLocator);
+  }
+
+  public void selectGpuTypeWithWait() {
+    ElementActions.selectOptionWithWait(gpuType);
+  }
+
+  public void selectDatacenterLocationOptionWithWait() {
+    ElementActions.selectOptionWithWait(datacenterLocationOptionLocator);
   }
 
   public GoogleCalculatorPage switchFrame() {
-    WebElement headFrame = WaitingUtils
-        .waitForElementLocatedBy(driver, headFrameLocator);
+    WebElement headFrame = Waiting
+        .waitForElementLocatedBy(headFrameLocator);
 
-    driver.switchTo().frame(headFrame)
+    switchTo().frame(headFrame)
         .switchTo().frame("myFrame");
     return this;
   }
