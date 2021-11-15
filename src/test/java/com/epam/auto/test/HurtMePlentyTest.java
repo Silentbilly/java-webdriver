@@ -1,6 +1,7 @@
 package com.epam.auto.test;
 
 import com.epam.auto.page.GoogleCloudPage;
+import com.epam.auto.service.SearchTextCreator;
 import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -51,7 +52,7 @@ public class HurtMePlentyTest extends BaseTest {
 
   @Test(description = "Проверка результатов Hurt Me Plenty")
   public void checkResults() {
-    final String searchText = "Google Cloud Platform Pricing Calculator";
+    final String searchText = SearchTextCreator.pricingCalculator();
 
     log.info("Opening main page and searching for text. Making calculations on calculator");
     GoogleCloudPage googleCloudPage = new GoogleCloudPage(driver);
