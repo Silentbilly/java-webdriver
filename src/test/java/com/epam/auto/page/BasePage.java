@@ -1,5 +1,6 @@
 package com.epam.auto.page;
 
+import com.epam.auto.driver.DriverSingleton;
 import com.epam.auto.utils.ElementActions;
 import java.util.List;
 import java.util.Set;
@@ -15,8 +16,8 @@ public abstract class BasePage implements WebDriver {
 
   protected WebDriver driver;
 
-  protected BasePage(WebDriver driver) {
-    this.driver = driver;
+  protected BasePage() {
+    driver = DriverSingleton.getDriver();
     PageFactory.initElements(driver, this);
   }
 

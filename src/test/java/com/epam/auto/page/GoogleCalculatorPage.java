@@ -54,8 +54,8 @@ public class GoogleCalculatorPage extends BasePage {
   @FindBy(xpath = "//div[2]/form/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn2;
 
-  public GoogleCalculatorPage(WebDriver driver, String searchText) {
-    super(driver);
+  public GoogleCalculatorPage(String searchText) {
+    super();
     this.searchText = searchText;
   }
 

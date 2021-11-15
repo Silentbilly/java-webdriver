@@ -14,8 +14,8 @@ public class GoogleCloudPage extends BasePage {
   @FindBy(xpath = "//input[@aria-label='Search']")
   private WebElement searchBar;
 
-  public GoogleCloudPage(WebDriver driver) {
-    super(driver);
+  public GoogleCloudPage() {
+    super();
   }
 
   public GoogleCloudPage openPage() {
@@ -29,6 +29,6 @@ public class GoogleCloudPage extends BasePage {
     searchBar.click();
     searchBar.sendKeys(searchText);
     action.sendKeys(searchBar, Keys.RETURN).build().perform();
-    return new GoogleCalculatorPage(driver, searchText);
+    return new GoogleCalculatorPage(searchText);
   }
 }

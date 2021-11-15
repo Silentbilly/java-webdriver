@@ -55,7 +55,7 @@ public class HurtMePlentyTest extends BaseTest {
     final String searchText = SearchTextCreator.pricingCalculator();
 
     log.info("Opening main page and searching for text. Making calculations on calculator");
-    GoogleCloudPage googleCloudPage = new GoogleCloudPage(driver);
+    GoogleCloudPage googleCloudPage = new GoogleCloudPage();
     googleCloudPage
         .openPage()
         .searchForText(searchText)
