@@ -35,7 +35,7 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement machineTypeOption;
   @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::md-input-container[child::label[contains(text(), 'Committed usage')]]/md-select")
   public WebElement committedUsage;
-  @FindBy(xpath = "//div[@aria-hidden='false']/descendant::md-option/div[contains(text(), '1 Year')]")
+  @FindBy(xpath = "//body/div/descendant::div[contains(text(), '1 Year')]")
   public WebElement committedUsageOption;
   @FindBy(xpath = "//form[@name='ComputeEngineForm']/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn;
