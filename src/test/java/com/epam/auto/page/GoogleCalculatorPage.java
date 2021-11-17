@@ -3,60 +3,61 @@ package com.epam.auto.page;
 import com.epam.auto.utils.ElementActions;
 import com.epam.auto.utils.Waiting;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class GoogleCalculatorPage extends BasePage {
 
-  private final String searchText;
   private final By headFrameLocator = By.xpath("//iframe[contains(@name,'goog_')]");
-  private final By gpuType = By.xpath("//md-select[@placeholder='Local SSD']");
+  private final By gpuTypeOption = By.xpath("//md-option[@value='NVIDIA_TESLA_P100']");
   private final By numberOfGpusOptionLocator = By
       .cssSelector("md-option[value='0'][class='ng-scope md-ink-ripple'][ng-disabled]");
   private final By datacenterLocationOptionLocator = By
       .xpath(
           "//md-select-menu[@class='md-overflow']/md-content/md-optgroup/md-option/div[contains(text(), 'Los Angeles (us-west2)')]");
-  @FindBy(xpath = "//b[text()='Google Cloud Platform Pricing Calculator']")
+  @FindBy(xpath = "//a[@data-ctorig='https://cloud.google.com/products/calculator']")
   public WebElement pricingCalculator;
   @FindBy(xpath = "//div[@class='hexagon-in2' and ancestor::div[@title='Compute Engine'] and ancestor::md-tab-item]")
   public WebElement computeEngineBtn;
   @FindBy(xpath = "//md-input-container/child::input[@ng-model='listingCtrl.computeServer.quantity']")
   public WebElement numberOfInstances;
-  @FindBy(xpath = "//md-card-content/div/div[1]/form/div[3]/div[1]/md-input-container")
+  @FindBy(xpath = "//md-input-container[child::label[contains(text(), 'Operating System / Software')]]")
   public WebElement operatingSystemSoftware;
   @FindBy(xpath = "//md-option[@value='free']")
   public WebElement operatingSystemSoftwareOption;
-  @FindBy(xpath = "//md-card-content/div/div[1]/form/div[4]/div[1]/md-input-container")
+  @FindBy(xpath = "//md-input-container[child::label[contains(text(), 'Machine Class')]]")
   public WebElement machineClass;
-  @FindBy(xpath = "//md-card-content/div/div[1]/form/div[8]/div[1]/md-input-container")
+  @FindBy(xpath = "//md-option[@value='preemptible']")
+  public WebElement machineClassOption;
+  @FindBy(xpath = "//md-input-container[child::label[contains(text(), 'Series')]]")
   public WebElement machineType;
-  @FindBy(xpath = "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-E2-STANDARD-8']")
+  @FindBy(xpath = "//md-input-container[child::label[contains(text(), 'Machine type')]]")
   public WebElement machineTypeOption;
-  @FindBy(xpath = "/html/body/md-content/md-card/div/md-card-content[1]/div[2]/div/md-card/md-card-content/div/div[2]/form/div[10]/div[1]/md-input-container/md-select/md-select-value/span[1]")
+  @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::md-input-container[child::label[contains(text(), 'Committed usage')]]/md-select")
   public WebElement committedUsage;
-  @FindBy(xpath = "//md-option[@id='select_option_139']/div[contains(text(), '1 Year')]")
+  @FindBy(xpath = "//div[@aria-hidden='false']/descendant::md-option/div[contains(text(), '1 Year')]")
   public WebElement committedUsageOption;
-  @FindBy(xpath = "//div[1]/form/div/button[@aria-label='Add to Estimate']")
+  @FindBy(xpath = "//form[@name='ComputeEngineForm']/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn;
   @FindBy(xpath = "//md-input-container/child::input[@ng-model='listingCtrl.soleTenant.nodesCount']")
   public WebElement numberOfNodes;
-  @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']")
+  @FindBy(xpath = "//md-checkbox[@ng-model='listingCtrl.soleTenant.addGPUs']/div[1]")
   public WebElement addGpusCheckBox;
-  @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
+  @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::label[contains(text(), 'GPU type')]/parent::md-input-container/md-select")
+  public WebElement gpuType;
+  @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::label[contains(text(), 'Number of GPUs')]/parent::md-input-container/md-select")
   public WebElement numberOfGpus;
   @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
   public WebElement localSsd;
   @FindBy(xpath = "//md-option[@ng-value='24']")
   public WebElement localSsdOption;
-  @FindBy(xpath = "//div[2]/form/div[10]/div[1]/md-input-container/md-select/md-select-value/span[2]")
+  @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::label[contains(text(), 'Datacenter location')]/parent::md-input-container/md-select")
   public WebElement datacenterLocation;
-  @FindBy(xpath = "//div[2]/form/div/button[@aria-label='Add to Estimate']")
+  @FindBy(xpath = "//form[@name='SoleTenantForm']/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn2;
 
-  public GoogleCalculatorPage(String searchText) {
+  public GoogleCalculatorPage() {
     super();
-    this.searchText = searchText;
   }
 
   public GoogleCalculatorPage goToPricingCalculatorPage() {
@@ -80,25 +81,25 @@ public class GoogleCalculatorPage extends BasePage {
   }
 
   public GoogleCalculatorPage selectOperatingSystemSoftware() {
-    clickElement(operatingSystemSoftware);
+    clickJsElement(operatingSystemSoftware);
     clickJsElement(operatingSystemSoftwareOption);
     return this;
   }
 
   public GoogleCalculatorPage selectMachineClass() {
     clickJsElement(machineClass);
+    clickJsElement(machineClassOption);
     return this;
   }
 
   public GoogleCalculatorPage selectMachineType() {
-    clickElement(machineType);
+    clickJsElement(machineType);
     clickJsElement(machineTypeOption);
     return this;
   }
 
-  public GoogleCalculatorPage addNumberOfGpus() {
+  public GoogleCalculatorPage activateAddGpus() {
     clickJsElement(addGpusCheckBox);
-    clickJsElement(numberOfGpus);
     return this;
   }
 
@@ -120,9 +121,15 @@ public class GoogleCalculatorPage extends BasePage {
     return this;
   }
 
-  public GoogleCalculatorPage selectGpu() {
-    selectGpuWithWait();
+  public GoogleCalculatorPage selectGpuType() {
+    clickJsElement(gpuType);
     selectGpuTypeWithWait();
+    return this;
+  }
+
+  public GoogleCalculatorPage selectGpuNumber() {
+    clickJsElement(numberOfGpus);
+    selectNumberOfGpuWithWait();
     return this;
   }
 
@@ -136,12 +143,12 @@ public class GoogleCalculatorPage extends BasePage {
   }
 
 
-  public void selectGpuWithWait() {
+  public void selectNumberOfGpuWithWait() {
     ElementActions.selectOptionWithWait(numberOfGpusOptionLocator);
   }
 
   public void selectGpuTypeWithWait() {
-    ElementActions.selectOptionWithWait(gpuType);
+    ElementActions.selectOptionWithWait(gpuTypeOption);
   }
 
   public void selectDatacenterLocationOptionWithWait() {

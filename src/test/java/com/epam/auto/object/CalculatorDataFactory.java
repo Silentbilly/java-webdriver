@@ -5,8 +5,8 @@ public class CalculatorDataFactory {
     CalculatorData calculatorData = new CalculatorData();
     calculatorData.setNumberOfInstances("4");
     calculatorData.setNumberOfNodes("4");
-    calculatorData.setExpectedVmClass("VM class: regular");
-    calculatorData.setExpectedInstanceType("Instance type: e2-standard-8");
+    calculatorData.setExpectedVmClass("VM class: preemptible");
+    calculatorData.setExpectedInstanceType("Instance type: n1-standard-1");
     calculatorData.setExpectedRegion("Region: Los Angeles");
     calculatorData.setExpectedLocalSsd("Local SSD: 24x375 GiB\nCommitted Use Discount applied");
     calculatorData.setExpectedCommitmentTerm("Commitment term: 1 Year");
