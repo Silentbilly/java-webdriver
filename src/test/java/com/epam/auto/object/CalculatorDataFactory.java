@@ -10,7 +10,7 @@ public class CalculatorDataFactory {
     calculatorData.setExpectedRegion("Region: Los Angeles");
     calculatorData.setExpectedLocalSsd("Local SSD: 24x375 GiB\nCommitted Use Discount applied");
     calculatorData.setExpectedCommitmentTerm("Commitment term: 1 Year");
-    calculatorData.setExpectedEstimatedCost("Total Estimated Cost: USD 18,180.25 per 1 month");
+    calculatorData.setExpectedEstimatedCost("Total Estimated Cost: USD 17,428.07 per 1 month");
     return calculatorData;
   }
 }
