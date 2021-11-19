@@ -15,6 +15,7 @@ public class GoogleCalculatorPage extends BasePage {
   private final By datacenterLocationOptionLocator = By
       .xpath(
           "//md-select-menu[@class='md-overflow']/md-content/md-optgroup/md-option/div[contains(text(), 'Los Angeles (us-west2)')]");
+  private final By committedUsageOption = By.xpath("//body/div/descendant::div[contains(text(), '1 Year')]");
   @FindBy(xpath = "//a[@data-ctorig='https://cloud.google.com/products/calculator']")
   public WebElement pricingCalculator;
   @FindBy(xpath = "//div[@class='hexagon-in2' and ancestor::div[@title='Compute Engine'] and ancestor::md-tab-item]")
@@ -35,8 +36,6 @@ public class GoogleCalculatorPage extends BasePage {
   public WebElement machineTypeOption;
   @FindBy(xpath = "//form[@name='SoleTenantForm']/descendant::md-input-container[child::label[contains(text(), 'Committed usage')]]/md-select")
   public WebElement committedUsage;
-  @FindBy(xpath = "//div[@aria-hidden='false']/descendant::md-option/div[contains(text(), '1 Year')]")
-  public WebElement committedUsageOption;
   @FindBy(xpath = "//form[@name='ComputeEngineForm']/div/button[@aria-label='Add to Estimate']")
   public WebElement addToEstimateBtn;
   @FindBy(xpath = "//md-input-container/child::input[@ng-model='listingCtrl.soleTenant.nodesCount']")
@@ -117,7 +116,7 @@ public class GoogleCalculatorPage extends BasePage {
 
   public GoogleCalculatorPage selectCommitUsage() {
     clickJsElement(committedUsage);
-    clickJsElement(committedUsageOption);
+    ElementActions.selectOptionWithWait(committedUsageOption);
     return this;
   }
 
