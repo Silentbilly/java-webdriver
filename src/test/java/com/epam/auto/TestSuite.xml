@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" name="TestSuite" parallel="tests">
-
+<suite name="TestSuite">
+  <listeners>
+    <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+  </listeners>
   <test name="Chrome Test">
     <classes>
       <class name="com.epam.auto.test.HurtMePlentyTest"/>
+    </classes>
+  </test>
+  <test name="Chrome Test Error">
+    <classes>
+      <class name="com.epam.auto.test.HurtMePlentyErrorTest"/>
     </classes>
   </test>
 </suite>

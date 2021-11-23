@@ -5,11 +5,14 @@ import java.util.Set;
 import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 @Log4j
-public class CustomDriverDecorator implements WebDriver, JavascriptExecutor {
+public class CustomDriverDecorator implements WebDriver, JavascriptExecutor, TakesScreenshot {
 
   protected WebDriver driver;
 
@@ -94,5 +97,10 @@ public class CustomDriverDecorator implements WebDriver, JavascriptExecutor {
   @Override
   public Object executeAsyncScript(String s, Object... objects) {
     return null;
+  }
+
+  @Override
+  public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+    return  ((TakesScreenshot) driver).getScreenshotAs(target);
   }
 }

@@ -133,11 +133,13 @@ public class GoogleCalculatorPage extends BasePage {
   }
 
   public GoogleCalculatorPage addToEstimate() {
+    ElementActions.takeScreenshot();
     clickJsElement(addToEstimateBtn);
     return this;
   }
 
   public void addToEstimateSecond() {
+    ElementActions.takeScreenshot();
     clickJsElement(addToEstimateBtn2);
   }
 

@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
  */
 
 @Log4j
-public class HurtMePlentyTest extends BaseTest {
+public class HurtMePlentyErrorTest extends BaseTest {
 
   private final String numberOfInstances;
   private final String numberOfNodes;
@@ -37,7 +37,7 @@ public class HurtMePlentyTest extends BaseTest {
   private final String expectedEstimatedCost;
 
   @Factory(dataProvider = "dataMethod")
-  public HurtMePlentyTest(String numberOfInstances, String numberOfNodes, String expectedVmClass,
+  public HurtMePlentyErrorTest(String numberOfInstances, String numberOfNodes, String expectedVmClass,
       String expectedInstanceType, String expectedRegion, String expectedLocalSsd, String expectedCommitmentTerm,
       String expectedEstimatedCost) {
     this.numberOfInstances = numberOfInstances;
@@ -50,9 +50,9 @@ public class HurtMePlentyTest extends BaseTest {
     this.expectedEstimatedCost = expectedEstimatedCost;
   }
 
-  @Test(description = "Проверка результатов Hurt Me Plenty")
+  @Test(description = "Проверка результатов Hurt Me Plenty с ошибкой")
   public void checkResults() {
-    final String searchText = "Google Cloud Platform Pricing Calculator";
+    final String searchText = SearchTextCreator.pricingCalculator();
 
     log.info("Opening main page and searching for text. Making calculations on calculator");
     GoogleCloudPage googleCloudPage = new GoogleCloudPage();
